@@ -23,8 +23,7 @@ if "vector" not in st.session_state:
     st.session_state.docs =st.session_state.loader.load()
     print(type(st.session_state.docs))
     st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    text = "\n\n".join([doc.page_content for doc in st.session_state.docs])
-    st.session_state.final_doc = st.session_state.text_splitter.split_text(text)
+    st.session_state.final_doc = st.session_state.text_splitter.split_documents(st.session_state.docs)
     docs = [Document(page_content=text) for text in st.session_state.final_doc]
     st.session_state.vectordb = FAISS.from_documents(docs, st.session_state.embeddings)
 
